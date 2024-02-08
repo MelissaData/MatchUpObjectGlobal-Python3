@@ -6,3 +6,8 @@ mdGlobalParse.dll
 mdGlobalParse.dll.hash
 MelissaUpdater
 # mdGeo_pythoncode.py
+
+*.hash
+
+MelissaMatchupGlobalSampleInput_output.txt
+MelissaMatchupUsSampleInput_output.txt
