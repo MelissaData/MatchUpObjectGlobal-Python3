@@ -23,7 +23,7 @@ And return
 ## Tested Environments
 
 - Windows 64-bit Python 3.8.7, Powershell 5.1
-- Melissa data files for 2024-Q3
+- Melissa data files for 2024-Q4
 
 ## Required File(s) and Programs
 
@@ -84,8 +84,8 @@ The console will then prompt you with the following warning shown in the image b
 
 #### Download this project
 ```
-$ git clone https://github.com/MelissaData/MatchUpObjectGlobal-Python3
-$ cd MatchUpObjectGlobal-Python3
+git clone https://github.com/MelissaData/MatchUpObjectGlobal-Python3
+cd MatchUpObjectGlobal-Python3
 ```
 
 #### Set up Melissa Updater 
@@ -120,25 +120,25 @@ Parameters:
 When you have modified the script to match your data location, let's run the script. There are two modes:
 - Interactive 
 
-	The script will prompt the user for a txt file, then use the provided txt file to test MatchUp Object Global.  For example:
+    The script will prompt the user for a txt file, then use the provided txt file to test MatchUp Object Global.  For example:
     ```
-    $ .\MelissaMatchupObjectGlobalWindowsPython3.ps1
+    .\MelissaMatchupObjectGlobalWindowsPython3.ps1
     ```
     For quiet mode:
     ```
-    $ .\MelissaMatchupObjectGlobalWindowsPython3.ps1 -quiet
+    .\MelissaMatchupObjectGlobalWindowsPython3.ps1 -quiet
     ```
 - Command Line 
 
     You can pass a global txt file, us txt file, and a license string into the ```-global```, ```-us```, and ```-license``` parameters respectively to test MatchUp Object Global. For example:
     ```
-    $ .\MelissaMatchupObjectGlobalWindowsPython3.ps1 -global "MelissaMatchupGlobalSampleInput.txt" -us "MelissaMatchupUSSampleInput.txt"
-    $ .\MelissaMatchupObjectGlobalWindowsPython3.ps1 -global "MelissaMatchupGlobalSampleInput.txt" -us "MelissaMatchupUSSampleInput.txt" -license "<your_license_string>"
+    .\MelissaMatchupObjectGlobalWindowsPython3.ps1 -global "MelissaMatchupGlobalSampleInput.txt" -us "MelissaMatchupUSSampleInput.txt"
+    .\MelissaMatchupObjectGlobalWindowsPython3.ps1 -global "MelissaMatchupGlobalSampleInput.txt" -us "MelissaMatchupUSSampleInput.txt" -license "<your_license_string>"
     ```
     For quiet mode:
     ```
-    $ .\MelissaMatchupObjectGlobalWindowsPython3.ps1 -global "MelissaMatchupGlobalSampleInput.txt" -us "MelissaMatchupUSSampleInput.txt" -quiet
-    $ .\MelissaMatchupObjectGlobalWindowsPython3.ps1 -global "MelissaMatchupGlobalSampleInput.txt" -us "MelissaMatchupUSSampleInput.txt" -license "<your_license_string>" -quiet
+    .\MelissaMatchupObjectGlobalWindowsPython3.ps1 -global "MelissaMatchupGlobalSampleInput.txt" -us "MelissaMatchupUSSampleInput.txt" -quiet
+    .\MelissaMatchupObjectGlobalWindowsPython3.ps1 -global "MelissaMatchupGlobalSampleInput.txt" -us "MelissaMatchupUSSampleInput.txt" -license "<your_license_string>" -quiet
     ```
 This is the expected output from a successful setup for interactive mode:
 
