@@ -84,8 +84,8 @@ The console will then prompt you with the following warning shown in the image b
 
 #### Download this project
 ```
-git clone https://git.melissadata.com/dtgroup/melissadataobjectexamples/python3/melissamatchupobjectwindowspython3
-cd MelissaMatchUpObjectGlobalWindowsPython3
+git clone https://github.com/MelissaData/MatchUpObjectGlobal-Python3
+cd MatchUpObjectGlobal-Python3
 ```
 
 #### Set up Melissa Updater 
