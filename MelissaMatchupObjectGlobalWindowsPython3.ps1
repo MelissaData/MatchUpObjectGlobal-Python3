@@ -1,5 +1,46 @@
-# Name:    MelissaMatchUpObjectGlobalWindowsPython3
-# Purpose: Use the Melissa Updater to make the MelissaMatchUpObjectGlobalWindowsPython3 code usable
+<#
+.SYNOPSIS
+    Downloads the required components and then runs MelissaMatchupObjectGlobalWindowsPython3
+
+.DESCRIPTION
+    This script uses the Melissa Updater to fetch the data file(s), DLL(s), and the Python wrapper,
+    verifies the DLL(s) downloaded, then runs the Python script against the supplied input files.
+
+    Overall flow:
+      1. Read parameters / prompt for the license and data path.
+      2. Download data file(s), DLL(s), and wrapper via the Melissa Updater.
+      3. Confirm the DLL(s) are present.
+      4. Run the script (supplied input files or interactive).
+
+.PARAMETER global
+    Path to the Global input file to deduplicate.
+
+.PARAMETER us
+    Path to the U.S. input file to deduplicate.
+
+.PARAMETER dataPath
+    Path to an existing data files directory. If omitted, the script prompts for
+    a path; pressing Enter at that prompt skips it and downloads the data files
+    into the project's Data folder via the Melissa Updater. A path that does not
+    exist aborts the script.
+
+.PARAMETER license
+    License string. Resolved in this order:
+      1. This parameter.
+      2. An interactive prompt, if the parameter was not supplied.
+      3. The MD_LICENSE environment variable, if the prompt was left blank.
+    Note that the environment variable is the last resort, not the first: running
+    without -license always prompts, even when MD_LICENSE is set.
+
+.PARAMETER quiet
+    Suppresses the Melissa Updater console output during downloads.
+
+.EXAMPLE
+    .\MelissaMatchupObjectGlobalWindowsPython3.ps1 -license "your-license"
+
+.EXAMPLE
+    .\MelissaMatchupObjectGlobalWindowsPython3.ps1 -global "MelissaMatchupGlobalSampleInput.txt" -us "MelissaMatchupUSSampleInput.txt" -license "your-license"
+#>
 
 
 ######################### Parameters ##########################
@@ -8,6 +49,7 @@ param($global ='""', $us = '""', $dataPath = '', $license = '', [switch]$quiet =
 
 ######################### Classes ##########################
 
+# Describes a single file to request from the Melissa Updater
 class FileConfig {
   [string] $FileName;
   [string] $ReleaseVersion;
@@ -19,6 +61,7 @@ class FileConfig {
 
 ######################### Config ###########################
 
+# Product release the updater pulls files for
 $RELEASE_VERSION = '2026.Q3'
 $ProductName = "GLOBAL_MU_DATA"
 
@@ -41,6 +84,7 @@ elseif (!(Test-Path $DataPath) -and ($DataPath -ne "$ProjectPath\Data")) {
   exit
 }
 
+# Binary/DLL(s) needed to run the example
 $DLLs = @(
   [FileConfig]@{
     FileName       = "mdGlobalParse.dll";
@@ -60,6 +104,7 @@ $DLLs = @(
   }
 )
 
+# Python wrapper source that exposes the DLL to the script
 $Wrapper = [FileConfig]@{
   FileName       = "mdMatchup_pythoncode.py";
   ReleaseVersion = $RELEASE_VERSION;
@@ -71,6 +116,7 @@ $Wrapper = [FileConfig]@{
 
 ######################## Functions #########################
 
+# Download the product data file(s) into $DataPath via the Melissa Updater.
 function DownloadDataFiles([string] $license) {
   $DataProg = 0
   Write-Host "=================================== MELISSA UPDATER =================================="
@@ -85,6 +131,7 @@ function DownloadDataFiles([string] $license) {
 
 }
 
+# Download each DLL in $DLLs into the project folder (with a progress bar).
 function DownloadDLLs() {
   Write-Host "MELISSA UPDATER IS DOWNLOADING DLL(s)..."
   $DLLProg = 0
@@ -112,6 +159,7 @@ function DownloadDLLs() {
   }
 }
 
+# Download the Python wrapper source into the project folder.
 function DownloadWrapper() {
   Write-Host "MELISSA UPDATER IS DOWNLOADING WRAPPER(S)..."
 
@@ -135,6 +183,7 @@ function DownloadWrapper() {
 }
 
 
+# Verify the expected DLL(s) landed in the project folder
 function CheckDLLs() {
   Write-Host "`nDouble checking dll(s) were downloaded...`n"
   $FileMissing = $false 
@@ -213,6 +262,8 @@ Write-Host "All file(s) have been downloaded/updated! "
 
 # Start
 # Run project
+# No input file supplied -> run interactively; otherwise pass the input files in.
+# Push-Location switches into the project folder first so the script and wrapper resolve.
 if ([string]::IsNullOrEmpty($global) -and [string]::IsNullOrEmpty($us)) {
   Push-Location MelissaMatchupObjectGlobalWindowsPython3
   python3 MelissaMatchupObjectGlobalWindowsPython3.py --license $License  --dataPath $DataPath
